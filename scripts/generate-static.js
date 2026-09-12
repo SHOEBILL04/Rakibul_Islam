@@ -1,53 +1,53 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import { load } from 'js-yaml'
+import fs from "node:fs"
+import path from "node:path"
+import { load } from "js-yaml"
 
-const DIST_DIR = path.resolve('dist')
-const CONTENT_DIR = path.resolve('content/posts')
+const DIST_DIR = path.resolve("dist")
+const CONTENT_DIR = path.resolve("content/posts")
 
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
-  if (!match) return { title: 'Untitled Post', summary: '', date: '' }
+  if (!match) return { title: "Untitled Post", summary: "", date: "" }
   try {
     const data = load(match[1]) || {}
     return {
-      title: data.title || 'Untitled Post',
-      summary: data.summary || '',
-      date: data.date || '',
+      title: data.title || "Untitled Post",
+      summary: data.summary || "",
+      date: data.date || "",
       tags: data.tags || [],
     }
   } catch (err) {
-    return { title: 'Untitled Post', summary: '', date: '' }
+    return { title: "Untitled Post", summary: "", date: "" }
   }
 }
 
 function escapeHtml(str) {
-  return (str || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
+  return (str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;")
 }
 
 async function generateStatic() {
-  console.log('⚡ Starting static route generation for GitHub Pages...')
+  console.log("⚡ Starting static route generation for GitHub Pages...")
 
-  const indexHtmlPath = path.join(DIST_DIR, 'index.html')
+  const indexHtmlPath = path.join(DIST_DIR, "index.html")
   if (!fs.existsSync(indexHtmlPath)) {
-    console.error('Error: dist/index.html not found. Run vite build first.')
+    console.error("Error: dist/index.html not found. Run vite build first.")
     process.exit(1)
   }
 
-  const baseHtml = fs.readFileSync(indexHtmlPath, 'utf8')
+  const baseHtml = fs.readFileSync(indexHtmlPath, "utf8")
 
   // 1. Ensure .nojekyll exists for GitHub Pages
-  fs.writeFileSync(path.join(DIST_DIR, '.nojekyll'), '')
-  console.log('✓ Created dist/.nojekyll')
+  fs.writeFileSync(path.join(DIST_DIR, ".nojekyll"), "")
+  console.log("✓ Created dist/.nojekyll")
 
   const repoBase = process.env.GITHUB_REPOSITORY
-    ? '/' + process.env.GITHUB_REPOSITORY.split('/')[1]
-    : '/Rakibul_Islam'
+    ? "/" + process.env.GITHUB_REPOSITORY.split("/")[1]
+    : "/Rakibul_Islam"
 
   // 2. Create 404.html fallback for GitHub Pages with SPA redirect
   const spaRedirect404 = `
@@ -61,12 +61,12 @@ async function generateStatic() {
     })();
   </script>
   `
-  const html404 = baseHtml.replace('</head>', spaRedirect404 + '</head>')
-  fs.writeFileSync(path.join(DIST_DIR, '404.html'), html404)
-  console.log('✓ Created dist/404.html (SPA fallback)')
+  const html404 = baseHtml.replace("</head>", spaRedirect404 + "</head>")
+  fs.writeFileSync(path.join(DIST_DIR, "404.html"), html404)
+  console.log("✓ Created dist/404.html (SPA fallback)")
 
   // 3. Create dist/blog/index.html with direct route redirect
-  const blogDir = path.join(DIST_DIR, 'blog')
+  const blogDir = path.join(DIST_DIR, "blog")
   fs.mkdirSync(blogDir, { recursive: true })
 
   const blogRedirectScript = `
@@ -80,19 +80,24 @@ async function generateStatic() {
   </script>
   `
   let blogIndexHtml = baseHtml
-    .replace(/<title>.*?<\/title>/i, '<title>Learning Journal & Technical Notes | Rakibul Islam Emon</title>')
-    .replace('</head>', blogRedirectScript + '</head>')
-  fs.writeFileSync(path.join(blogDir, 'index.html'), blogIndexHtml)
-  console.log('✓ Generated static route: /blog (dist/blog/index.html)')
+    .replace(
+      /<title>.*?<\/title>/i,
+      "<title>Learning Journal & Technical Notes | Rakibul Islam Emon</title>",
+    )
+    .replace("</head>", blogRedirectScript + "</head>")
+  fs.writeFileSync(path.join(blogDir, "index.html"), blogIndexHtml)
+  console.log("✓ Generated static route: /blog (dist/blog/index.html)")
 
   // 4. Scan content/posts and create dist/blog/[slug]/index.html
   if (fs.existsSync(CONTENT_DIR)) {
-    const files = fs.readdirSync(CONTENT_DIR).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
+    const files = fs
+      .readdirSync(CONTENT_DIR)
+      .filter((f) => f.endsWith(".md") || f.endsWith(".mdx"))
     console.log(`Found ${files.length} journal post(s) in content/posts/`)
 
     for (const file of files) {
-      const slug = file.replace(/\.(md|mdx)$/, '')
-      const raw = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf8')
+      const slug = file.replace(/\.(md|mdx)$/, "")
+      const raw = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8")
       const meta = parseFrontmatter(raw)
 
       const postDir = path.join(blogDir, slug)
@@ -112,41 +117,52 @@ async function generateStatic() {
       let postHtml = baseHtml
         .replace(
           /<title>.*?<\/title>/i,
-          `<title>${escapeHtml(meta.title)} | Rakibul Islam Emon</title>`
+          `<title>${escapeHtml(meta.title)} | Rakibul Islam Emon</title>`,
         )
         .replace(
           /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
-          `<meta name="description" content="${escapeHtml(meta.summary)}" />`
+          `<meta name="description" content="${escapeHtml(meta.summary)}" />`,
         )
 
       // Add OpenGraph meta tags
       if (!postHtml.includes('property="og:title"')) {
         postHtml = postHtml.replace(
-          '</head>',
-          `  <meta property="og:title" content="${escapeHtml(meta.title)}" />\n  <meta property="og:description" content="${escapeHtml(meta.summary)}" />\n${postRedirectScript}\n</head>`
+          "</head>",
+          `  <meta property="og:title" content="${escapeHtml(meta.title)}" />\n  <meta property="og:description" content="${escapeHtml(meta.summary)}" />\n${postRedirectScript}\n</head>`,
         )
       } else {
         postHtml = postHtml
           .replace(
             /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
-            `<meta property="og:title" content="${escapeHtml(meta.title)}" />`
+            `<meta property="og:title" content="${escapeHtml(meta.title)}" />`,
           )
           .replace(
             /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
-            `<meta property="og:description" content="${escapeHtml(meta.summary)}" />`
+            `<meta property="og:description" content="${escapeHtml(meta.summary)}" />`,
           )
-          .replace('</head>', postRedirectScript + '</head>')
+          .replace("</head>", postRedirectScript + "</head>")
       }
 
-      fs.writeFileSync(path.join(postDir, 'index.html'), postHtml)
-      console.log(`✓ Generated static route: /blog/${slug} (dist/blog/${slug}/index.html)`)
+      fs.writeFileSync(path.join(postDir, "index.html"), postHtml)
+      console.log(
+        `✓ Generated static route: /blog/${slug} (dist/blog/${slug}/index.html)`,
+      )
+
+      // If slug contains hyphens, also create underscore alias route for compatibility
+      if (slug.includes("-")) {
+        const altSlug = slug.replace(/-/g, "_")
+        const altPostDir = path.join(blogDir, altSlug)
+        fs.mkdirSync(altPostDir, { recursive: true })
+        fs.writeFileSync(path.join(altPostDir, "index.html"), postHtml)
+        console.log(`✓ Generated alias static route: /blog/${altSlug}`)
+      }
     }
   }
 
-  console.log('🎉 Static routes generation complete!')
+  console.log("🎉 Static routes generation complete!")
 }
 
-generateStatic().catch(err => {
-  console.error('Failed to generate static routes:', err)
+generateStatic().catch((err) => {
+  console.error("Failed to generate static routes:", err)
   process.exit(1)
 })

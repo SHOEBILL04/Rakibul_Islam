@@ -1,4 +1,4 @@
-import { load } from 'js-yaml'
+import { load } from "js-yaml"
 
 export interface PostFrontmatter {
   title: string
@@ -15,14 +15,16 @@ export interface Post extends PostFrontmatter {
 }
 
 /** Parse frontmatter block using pure-JS YAML parser */
-export function parseMarkdown(raw: string): { frontmatter: PostFrontmatter; content: string } {
+export function parseMarkdown(
+  raw: string,
+): { frontmatter: PostFrontmatter content: string } {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
   if (!match) {
     return {
       frontmatter: {
-        title: 'Untitled Post',
-        date: new Date().toISOString().split('T')[0],
-        summary: '',
+        title: "Untitled Post",
+        date: new Date().toISOString().split("T")[0],
+        summary: "",
         tags: [],
       },
       content: raw,
@@ -31,24 +33,24 @@ export function parseMarkdown(raw: string): { frontmatter: PostFrontmatter; cont
 
   const [, yamlStr, markdownContent] = match
   try {
-    const data = (load(yamlStr) as Partial<PostFrontmatter>) || {}
+    const data = load(yamlStr) as Partial<PostFrontmatter> || {}
     return {
       frontmatter: {
-        title: data.title || 'Untitled Post',
-        date: data.date || new Date().toISOString().split('T')[0],
-        summary: data.summary || '',
+        title: data.title || "Untitled Post",
+        date: data.date || new Date().toISOString().split("T")[0],
+        summary: data.summary || "",
         tags: Array.isArray(data.tags) ? data.tags : [],
-        author: data.author || 'Rakibul Islam Emon',
+        author: data.author || "Rakibul Islam Emon",
       },
       content: markdownContent,
     }
   } catch (err) {
-    console.error('Failed to parse frontmatter YAML:', err)
+    console.error("Failed to parse frontmatter YAML:", err)
     return {
       frontmatter: {
-        title: 'Untitled Post',
-        date: new Date().toISOString().split('T')[0],
-        summary: '',
+        title: "Untitled Post",
+        date: new Date().toISOString().split("T")[0],
+        summary: "",
         tags: [],
       },
       content: markdownContent,
@@ -64,8 +66,8 @@ function calculateReadingTime(text: string): string {
 }
 
 // Vite static glob import for all markdown files in content/posts
-const markdownModules = import.meta.glob('/content/posts/*.{md,mdx}', {
-  query: '?raw',
+const markdownModules = import.meta.glob("/content/posts/*.{md,mdx}", {
+  query: "?raw",
   eager: true,
 }) as Record<string, { default: string } | string>
 
@@ -78,8 +80,12 @@ export function getAllPosts(): Post[] {
   const posts: Post[] = []
 
   for (const [filepath, rawModule] of Object.entries(markdownModules)) {
-    const rawContent = typeof rawModule === 'string' ? rawModule : rawModule.default
-    const slug = filepath.replace(/^\/content\/posts\//, '').replace(/\.(md|mdx)$/, '')
+    const rawContent =
+      typeof rawModule === "string" ? rawModule : rawModule.default
+    const slug = filepath
+      .replace(/^\/content\/posts\//, "")
+      .replace(/\.(md|mdx)$/, "")
+      .trim()
     const { frontmatter, content } = parseMarkdown(rawContent)
 
     posts.push({
@@ -97,7 +103,15 @@ export function getAllPosts(): Post[] {
 }
 
 export function getPostBySlug(slug: string): Post | undefined {
-  return getAllPosts().find(p => p.slug === slug)
+  const normalized = decodeURIComponent(slug).trim().toLowerCase()
+  return getAllPosts().find((p) => {
+    const postSlug = p.slug.toLowerCase()
+    return (
+      postSlug === normalized ||
+      postSlug === normalized.replace(/_/g, "-") ||
+      postSlug === normalized.replace(/-/g, "_")
+    )
+  })
 }
 
 export function getAllTags(): string[] {
