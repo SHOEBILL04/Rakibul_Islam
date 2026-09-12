@@ -1,8 +1,10 @@
 import type { FC, SVGProps } from 'react'
 
-import codeChefSvg from '@/assets/images/codechef.svg'
-import atCoderPng from '@/assets/images/atcoder.png'
-import icpcPng from '@/assets/images/icpc.png'
+import {
+  ICPC_LOGO_DATA_URI,
+  ATCODER_LOGO_DATA_URI,
+  CODECHEF_LOGO_DATA_URI,
+} from './logoAssets'
 
 type IconProps = SVGProps<SVGSVGElement>
 
@@ -20,7 +22,7 @@ export const CodeforcesLogo: FC<IconProps> = (props) => (
 /** Official CodeChef Chef Mascot Logo */
 export const CodeChefLogo: FC<any> = ({ width = 24, height = 24, className = '', ...rest }) => (
   <img
-    src={codeChefSvg}
+    src={CODECHEF_LOGO_DATA_URI}
     alt="CodeChef"
     width={width}
     height={height}
@@ -33,7 +35,7 @@ export const CodeChefLogo: FC<any> = ({ width = 24, height = 24, className = '',
 /** Official AtCoder Crest Logo from atcoder.jp */
 export const AtCoderLogo: FC<any> = ({ width = 24, height = 24, className = '', ...rest }) => (
   <img
-    src={atCoderPng}
+    src={ATCODER_LOGO_DATA_URI}
     alt="AtCoder"
     width={width}
     height={height}
@@ -46,7 +48,7 @@ export const AtCoderLogo: FC<any> = ({ width = 24, height = 24, className = '', 
 /** Official ICPC Logo (Idea, Algorithm, Solution) */
 export const IcpcLogo: FC<any> = ({ width = 24, height = 24, className = '', ...rest }) => (
   <img
-    src={icpcPng}
+    src={ICPC_LOGO_DATA_URI}
     alt="ICPC"
     width={width}
     height={height}
