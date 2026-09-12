@@ -6,18 +6,26 @@ import path from 'node:path'
 import siteConfiguration from './.figma/make/site.json'
 
 // Vite config — https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, mode }) => {
   // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
   const emitSourcemaps = mode === 'development'
 
+  const repoName = process.env.GITHUB_REPOSITORY
+    ? process.env.GITHUB_REPOSITORY.split('/')[1]
+    : 'Rakibul_Islam'
+
+  const base =
+    process.env.BASE_PATH ||
+    (process.env.FIGMA_PUBLIC_URL
+      ? `${process.env.FIGMA_PUBLIC_URL}/`
+      : process.env.GITHUB_ACTIONS
+      ? `/${repoName}/`
+      : command === 'serve'
+      ? '/'
+      : `/${repoName}/`)
+
   return {
-    base:
-      process.env.BASE_PATH ||
-      (process.env.FIGMA_PUBLIC_URL
-        ? `${process.env.FIGMA_PUBLIC_URL}/`
-        : process.env.GITHUB_ACTIONS
-        ? '/Portfolio/'
-        : './'),
+    base,
     define: {
       __BUNDLED_DEV__: false,
     },
@@ -28,7 +36,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      figmaSiteConfiguration(siteConfiguration),
+      figmaSiteConfiguration(siteConfiguration, base),
       figmaErrorOverlayReplay(),
       figmaReactRefreshBoundaryFallback(),
       figmaMakeKitPlugin({ storiesGlob: '/src/**/*.stories.{ts,tsx,js,jsx}' }),
@@ -79,7 +87,7 @@ type FigmaSiteConfiguration = {
 }
 
 /** Applies /.figma/make/site.json to the generated document shell. */
-function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
+function figmaSiteConfiguration(config: FigmaSiteConfiguration, base: string = '/'): Plugin {
   function sanitizeHtmlValue(value: string | undefined): string {
     return value?.replace(/[^a-zA-Z0-9_-]/g, '') || ''
   }
@@ -92,7 +100,8 @@ function figmaSiteConfiguration(config: FigmaSiteConfiguration): Plugin {
 
   const title = config.title ?? "Rakibul Islam Emon"
   const description = config.description ?? ''
-  const favicon = config.icons?.icon ?? ''
+  const rawFavicon = config.icons?.icon ?? ''
+  const favicon = rawFavicon.startsWith('./') ? `${base}${rawFavicon.slice(2)}` : rawFavicon
   const socialImage = config.openGraph?.image ?? ''
   const language = sanitizeHtmlValue(config.language) || 'en'
   const googleAnalyticsId = sanitizeHtmlValue(config.analytics?.googleAnalyticsId)

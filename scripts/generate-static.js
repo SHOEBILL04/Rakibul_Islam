@@ -45,13 +45,18 @@ async function generateStatic() {
   fs.writeFileSync(path.join(DIST_DIR, '.nojekyll'), '')
   console.log('✓ Created dist/.nojekyll')
 
+  const repoBase = process.env.GITHUB_REPOSITORY
+    ? '/' + process.env.GITHUB_REPOSITORY.split('/')[1]
+    : '/Rakibul_Islam'
+
   // 2. Create 404.html fallback for GitHub Pages with SPA redirect
   const spaRedirect404 = `
   <script>
     (function() {
       var p = window.location.pathname;
-      var base = p.includes('/Portfolio') ? '/Portfolio' : '';
-      var sub = p.replace(base, '').replace(/^\\//, '');
+      var repo = '${repoBase}';
+      var base = p.startsWith(repo) ? repo : '';
+      var sub = p.slice(base.length).replace(/^\\//, '');
       window.location.replace(base + '/#' + (sub ? '/' + sub : '/') + window.location.search + window.location.hash);
     })();
   </script>
@@ -68,7 +73,8 @@ async function generateStatic() {
   <script>
     (function() {
       var p = window.location.pathname;
-      var base = p.includes('/Portfolio') ? '/Portfolio' : '';
+      var repo = '${repoBase}';
+      var base = p.startsWith(repo) ? repo : '';
       window.location.replace(base + '/#/blog' + window.location.search);
     })();
   </script>
@@ -96,7 +102,8 @@ async function generateStatic() {
   <script>
     (function() {
       var p = window.location.pathname;
-      var base = p.includes('/Portfolio') ? '/Portfolio' : '';
+      var repo = '${repoBase}';
+      var base = p.startsWith(repo) ? repo : '';
       window.location.replace(base + '/#/blog/${slug}' + window.location.search);
     })();
   </script>
