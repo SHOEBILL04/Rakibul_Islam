@@ -874,7 +874,7 @@ export default function PortfolioPage() {
             <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200/80 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 font-mono">
               <div className="flex items-center gap-1.5">
                 <span className="text-indigo-600 dark:text-indigo-400 font-bold">●</span>
-                <span>Codeforces Specialist (1262)</span>
+                <span>Codeforces Pupil (1262)</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="text-emerald-600 dark:text-emerald-400 font-bold">●</span>
@@ -1161,7 +1161,7 @@ export default function PortfolioPage() {
                 platform: 'Codeforces',
                 handle: 'SHOEBILL',
                 metric: 'Max Rating: 1262',
-                badge: 'Specialist Trajectory',
+                badge: 'Pupil',
                 color: '#4f46e5',
                 url: 'https://codeforces.com/profile/SHOEBILL',
                 Icon: CodeforcesLogo,
