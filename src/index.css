@@ -25,19 +25,19 @@
 }
 
 :root {
-  --bg-main: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.82);
-  --border-card: rgba(226, 232, 240, 0.9);
-  --text-main: #090d16;
-  --text-muted: #475467;
+  --bg-main: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --border-card: rgba(226, 232, 240, 0.85);
+  --text-main: #0f172a;
+  --text-muted: #475569;
   --text-subtle: #64748b;
-  --grid-line: rgba(15, 23, 42, 0.04);
+  --grid-line: rgba(99, 102, 241, 0.035);
   --nav-bg: rgba(255, 255, 255, 0.85);
-  --nav-border: rgba(226, 232, 240, 0.9);
-  --badge-bg: #f8fafc;
+  --nav-border: rgba(226, 232, 240, 0.85);
+  --badge-bg: #f1f5f9;
   --badge-border: #e2e8f0;
-  --badge-text: #475467;
-  --preview-bg: #f8fafc;
+  --badge-text: #334155;
+  --preview-bg: #f1f5f9;
   --preview-border: #e2e8f0;
   --preview-card: #ffffff;
 }

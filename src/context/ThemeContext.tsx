@@ -19,15 +19,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       } catch (err) {
         // Storage access may fail in sandboxed iframes or private browsing
       }
-      try {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark'
-        }
-      } catch (err) {
-        // matchMedia may not be available
-      }
     }
-    return 'dark'
+    return 'light'
   })
 
   useEffect(() => {
