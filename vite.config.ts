@@ -11,7 +11,16 @@ export default defineConfig(({ mode }) => {
   const emitSourcemaps = mode === 'development'
 
   return {
-    base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : './',
+    base:
+      process.env.BASE_PATH ||
+      (process.env.FIGMA_PUBLIC_URL
+        ? `${process.env.FIGMA_PUBLIC_URL}/`
+        : process.env.GITHUB_ACTIONS
+        ? '/Portfolio/'
+        : './'),
+    define: {
+      __BUNDLED_DEV__: false,
+    },
     build: {
       sourcemap: emitSourcemaps ? 'inline' : false,
       minify: !emitSourcemaps,
