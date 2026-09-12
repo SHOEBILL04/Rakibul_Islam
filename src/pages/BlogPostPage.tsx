@@ -239,7 +239,7 @@ export default function BlogPostPage() {
                 Rakibul Islam Emon
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
-                Final-year CSE student at Ahsanullah University of Science and Technology (AUST) and ICPC 2025 Dhaka Regional finalist (#44th Place). Writing about algorithms, distributed backends, and systems engineering.
+                Final-year CSE student at Ahsanullah University of Science and Technology (AUST). Storing and organizing personal learnings across software engineering, systems architecture, and core computer science.
               </p>
             </div>
             <Link

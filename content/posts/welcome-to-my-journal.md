@@ -1,13 +1,13 @@
 ---
-title: "First Journal Entry: Building in Public"
+title: "First Journal Entry: Storing My Learnings"
 date: "2026-09-12"
-summary: "Welcome to my local-first engineering notebook. Documenting everything I learn — from complex algorithms and system architecture to minor concepts, tools, and cross-disciplinary curiosities."
-tags: ["Learning", "CS", "Engineering", "Journal"]
+summary: "Welcome to my personal learning journal. A dedicated space to store everything I learn — from core programming and architecture to minor daily discoveries, tools, and cross-disciplinary concepts."
+tags: ["Learning", "Programming", "Engineering", "Journal"]
 ---
 
 # Welcome to My Learning Journal
 
-This journal serves as a local-first engineering notebook where I document my explorations in competitive programming, distributed systems architecture, database internals, and software engineering.
+This journal serves as a personal, local-first knowledge base where I document and organize everything I learn. It is a central repository for my thoughts, findings, and technical notes across software development and beyond.
 
 ## Why a File-Based Journal?
 
@@ -20,37 +20,37 @@ Having markdown files stored directly in version control provides distinct advan
 
 ```bash
 # Adding a new journal entry is as simple as:
-git checkout -b post/systems-concurrency
-touch content/posts/systems-concurrency.md
+git checkout -b post/new-learning-topic
+touch content/posts/new-learning-topic.md
 # write your thoughts, commit, and push!
 git push origin main
 ```
 
 ## What to Expect Here
 
-This journal is an open-ended engineering logbook. Rather than only posting polished case studies, I want this space to capture **everything I learn** — from fundamental algorithmic breakthroughs to the smallest command-line trick or quirky browser behavior.
+This journal is an open-ended personal logbook. I want this space to capture **everything I learn** — major concepts or minor details, whether directly tied to my daily work or sparked by curiosity in other fields.
 
-Whether a concept directly relates to my day-to-day focus in computer science or stems from curiosity in completely different fields, if it broadens my thinking or solves a real problem, it has a home here:
+If an idea broadens my thinking, explains how something works under the hood, or solves a real problem, it has a place here:
 
-### 1. Core Computer Science & Algorithms
-- **Algorithmic Insights**: Deep dives into graph theory, dynamic programming, segment trees, number theory, and contest post-mortems from ICPC and national programming contests.
-- **Complexity Analysis & Trade-offs**: Big-O bounds in practice, memory footprints, cache locality, and micro-optimizations in C++ and Python.
+### 1. Core Programming & Problem Solving
+- **Algorithms & Data Structures**: Practical explorations of graph traversal, dynamic programming, trees, data structures, and problem-solving patterns.
+- **Complexity & Optimization**: Big-O analysis in practice, memory footprints, cache locality, and performance considerations in languages like C++, Python, and Java.
 
 ### 2. Systems, Databases & Backend Engineering
 - **Architecture & Design**: High-throughput backend engineering, concurrency handling, and clean modular designs using Spring Boot, Node.js, and Laravel.
 - **Data Persistence**: Relational database modeling, query optimization, ACID guarantees, locking mechanisms, and stored procedures across PostgreSQL, MSSQL, and MySQL.
 
-### 3. Frontend Engineering & Interface Design
+### 3. Frontend Engineering & User Interfaces
 - **Web Technologies**: Modern React patterns, state management, component architecture, and responsive layouts.
 - **Craft & UX**: Typography, color contrast, motion design, glassmorphic styling, and creating interfaces that feel snappy and pleasant to use.
 
 ### 4. Developer Workflows & Micro-Learnings
-- **Tooling & Environment**: Shell wizardry (Bash, Zsh), Linux system utilities, Git workflows, debugging tricks, and terminal productivity tools.
-- **Minor Discoveries & "Aha!" Moments**: Quirks in language specifications, obscure standard library methods, or quick troubleshooting notes that saved hours of debugging.
+- **Tooling & Environment**: Shell commands (Bash, Zsh), Linux system utilities, Git workflows, debugging techniques, and terminal productivity tools.
+- **Minor Discoveries & "Aha!" Moments**: Quirks in language specifications, obscure standard library methods, or quick troubleshooting notes that save hours of debugging.
 
-### 5. Cross-Disciplinary & Exploratory Concepts
-- **Beyond Pure CS**: Concepts from mathematics, logic, hardware fundamentals, developer psychology, productivity systems, or whatever rabbit hole I dive into next.
+### 5. Cross-Disciplinary & Curious Topics
+- **Beyond Pure Software**: Concepts from mathematics, logic, hardware fundamentals, developer psychology, productivity systems, or whatever topic I dive into next.
 
 ---
 
-No idea is too small or too niche. The goal is simple: **learn continuously, document thoroughly, and share openly.**
+No topic is too small or too niche. The goal is simple: **learn continuously, document thoroughly, and keep all knowledge in one accessible place.**
