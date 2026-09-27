@@ -838,7 +838,7 @@ export default function PortfolioPage() {
             {/* Main Editorial Headline */}
             <div className="flex flex-col gap-3">
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.1]">
-                Rakibul Islam
+                Rakibul Islam <span className="text-slate-500 dark:text-slate-400 font-semibold text-3xl sm:text-4xl md:text-5xl">(Emon)</span>
                 <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-indigo-600 dark:text-indigo-400 mt-2">
                   Software Engineer &amp; Full-Stack Developer
                 </span>
