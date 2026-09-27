@@ -1,11 +1,14 @@
 {
-  "title": "Rakibul Islam Emon",
+  "title": "Rakibul Islam | Software Engineer & Full-Stack Developer",
   "icons": {
     "icon": "./favicon.svg"
   },
-  "description": "Software engineering portfolio of Rakibul Islam Emon, showcasing projects, achievements, and expertise with a minimal, modern glassy design.",
+  "description": "Official portfolio of Rakibul Islam (Emon) — Software Engineer and Full-Stack Developer specializing in scalable web systems, backend architectures, and algorithmic problem-solving.",
   "robots": {
-    "index": false
+    "index": true
+  },
+  "openGraph": {
+    "image": "https://shoebill04.github.io/Rakibul_Islam/favicon.svg"
   },
   "accessibility": {
     "addBypassLinks": false,

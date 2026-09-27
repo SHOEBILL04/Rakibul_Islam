@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shoebill04.github.io/Rakibul_Islam/sitemap.xml

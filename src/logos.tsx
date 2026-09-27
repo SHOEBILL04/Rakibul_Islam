@@ -23,7 +23,7 @@ export const CodeforcesLogo: FC<IconProps> = (props) => (
 export const CodeChefLogo: FC<any> = ({ width = 24, height = 24, className = '', ...rest }) => (
   <img
     src={CODECHEF_LOGO_DATA_URI}
-    alt="CodeChef"
+    alt="CodeChef Competitive Programming Platform Official Logo"
     width={width}
     height={height}
     className={`object-contain ${className}`}
@@ -36,7 +36,7 @@ export const CodeChefLogo: FC<any> = ({ width = 24, height = 24, className = '',
 export const AtCoderLogo: FC<any> = ({ width = 24, height = 24, className = '', ...rest }) => (
   <img
     src={ATCODER_LOGO_DATA_URI}
-    alt="AtCoder"
+    alt="AtCoder Algorithmic Contests Official Crest Logo"
     width={width}
     height={height}
     className={`object-contain ${className}`}
@@ -49,7 +49,7 @@ export const AtCoderLogo: FC<any> = ({ width = 24, height = 24, className = '', 
 export const IcpcLogo: FC<any> = ({ width = 24, height = 24, className = '', ...rest }) => (
   <img
     src={ICPC_LOGO_DATA_URI}
-    alt="ICPC"
+    alt="ICPC International Collegiate Programming Contest Official Logo"
     width={width}
     height={height}
     className={`object-contain ${className}`}

@@ -821,7 +821,8 @@ export default function PortfolioPage() {
       </header>
 
       {/* ── Hero Section (Editorial + Interactive Studio) ── */}
-      <section id="home" className="pt-28 pb-16 px-6 relative max-w-6xl mx-auto">
+      <section id="home" className="pt-28 pb-16 px-6 relative max-w-6xl mx-auto scroll-mt-24">
+        <div id="about" className="scroll-mt-24" />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Column: Hero Statement */}
           <div className="lg:col-span-6 flex flex-col gap-6">
@@ -837,13 +838,22 @@ export default function PortfolioPage() {
             {/* Main Editorial Headline */}
             <div className="flex flex-col gap-3">
               <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.1]">
-                Engineering scalable systems with{' '}
-                <span className="gradient-accent">algorithmic precision.</span>
+                Rakibul Islam
+                <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-indigo-600 dark:text-indigo-400 mt-2">
+                  Software Engineer &amp; Full-Stack Developer
+                </span>
               </h1>
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl font-normal">
-                Final-year CSE student at <strong className="text-slate-900 dark:text-white font-semibold">Ahsanullah University of Science and Technology</strong> (CGPA 3.63/4.00) and ICPC Dhaka Regional{' '}
-                <strong className="text-indigo-600 dark:text-indigo-400 font-mono font-semibold">#44th Place</strong> finalist. Architecting high-throughput backend services, relational models, and algorithmic software.
-              </p>
+              <div className="pt-1">
+                <h2 className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1.5">
+                  About &amp; Overview
+                </h2>
+                <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl font-normal">
+                  Engineering scalable systems with{' '}
+                  <span className="gradient-accent font-semibold">algorithmic precision.</span> Final-year CSE student at{' '}
+                  <strong className="text-slate-900 dark:text-white font-semibold">Ahsanullah University of Science and Technology</strong> (CGPA 3.63/4.00) and ICPC Dhaka Regional{' '}
+                  <strong className="text-indigo-600 dark:text-indigo-400 font-mono font-semibold">#44th Place</strong> finalist. Architecting high-throughput backend services, relational models, and algorithmic software.
+                </p>
+              </div>
             </div>
 
             {/* Key Action CTAs */}
@@ -923,10 +933,10 @@ export default function PortfolioPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <div className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">
-              [01] // ACADEMIC FOUNDATION
+              [01] // ACADEMIC EXPERIENCE
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-950 dark:text-white">
-              Education & Institutional Excellence
+              Education & Academic Experience
             </h2>
           </div>
           <span className="text-xs font-mono text-slate-400 dark:text-slate-500 hidden sm:inline">2021 — 2026</span>
@@ -999,7 +1009,7 @@ export default function PortfolioPage() {
               [02] // FEATURED PROJECTS
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-950 dark:text-white">
-              Featured Systems & Engineering Projects
+              Featured Projects & Engineering Systems
             </h2>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
               Engineered for university capstones and hackathons with relational databases, robust APIs, and clean UX.
@@ -1084,7 +1094,7 @@ export default function PortfolioPage() {
               [03] // TECHNICAL MATRIX
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-950 dark:text-white">
-              Languages, Frameworks & Infrastructure
+              Technical Skills & Engineering Stack
             </h2>
           </div>
 
@@ -1142,7 +1152,7 @@ export default function PortfolioPage() {
             [04] // ALGORITHMIC EXCELLENCE
           </div>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-950 dark:text-white">
-            Contest Journey & Online Judge Ratings
+            Competitive Programming & Contests
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Active competitive programming trajectory with over 1,000 solved problems across global algorithmic platforms.
@@ -1152,9 +1162,9 @@ export default function PortfolioPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Online Judges Profile Cards (5 cols) */}
           <div className="lg:col-span-5 flex flex-col gap-3.5">
-            <div className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">
+            <h3 className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">
               Verified Judge Profiles
-            </div>
+            </h3>
 
             {[
               {
@@ -1240,9 +1250,9 @@ export default function PortfolioPage() {
 
           {/* Contest Achievement Timeline (7 cols) with Logos */}
           <div className="lg:col-span-7">
-            <div className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">
               Major National & Inter-University Contests (2025)
-            </div>
+            </h3>
 
             <div className="flex flex-col gap-2">
               {CONTESTS.map((contest, i) => {
@@ -1286,9 +1296,12 @@ export default function PortfolioPage() {
             OPEN FOR OPPORTUNITIES
           </div>
 
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight mb-4">
-            {"Let's build reliable software together."}
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight mb-2">
+            Contact & Collaboration
           </h2>
+          <p className="font-display text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+            {"Let's build reliable software together."}
+          </p>
           <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed mb-8">
             Available for software engineering roles, full-stack systems engineering, and collaborative projects. Feel free to reach out directly.
           </p>

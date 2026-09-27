@@ -84,6 +84,30 @@ async function generateStatic() {
       /<title>.*?<\/title>/i,
       "<title>Learning Journal & Technical Notes | Rakibul Islam Emon</title>",
     )
+    .replace(
+      /<meta\s+name="title"\s+content=".*?"\s*\/?>/i,
+      `<meta name="title" content="Learning Journal & Technical Notes | Rakibul Islam Emon" />`,
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:title" content="Learning Journal & Technical Notes | Rakibul Islam Emon" />`,
+    )
+    .replace(
+      /<meta\s+property="twitter:title"\s+content=".*?"\s*\/?>/i,
+      `<meta property="twitter:title" content="Learning Journal & Technical Notes | Rakibul Islam Emon" />`,
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
+      `<link rel="canonical" href="https://shoebill04.github.io/Rakibul_Islam/blog/" />`,
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:url" content="https://shoebill04.github.io/Rakibul_Islam/blog/" />`,
+    )
+    .replace(
+      /<meta\s+property="twitter:url"\s+content=".*?"\s*\/?>/i,
+      `<meta property="twitter:url" content="https://shoebill04.github.io/Rakibul_Islam/blog/" />`,
+    )
     .replace("</head>", blogRedirectScript + "</head>")
   fs.writeFileSync(path.join(blogDir, "index.html"), blogIndexHtml)
   console.log("✓ Generated static route: /blog (dist/blog/index.html)")
@@ -103,6 +127,7 @@ async function generateStatic() {
       const postDir = path.join(blogDir, slug)
       fs.mkdirSync(postDir, { recursive: true })
 
+      const postUrl = `https://shoebill04.github.io/Rakibul_Islam/blog/${slug}/`
       const postRedirectScript = `
   <script>
     (function() {
@@ -120,28 +145,42 @@ async function generateStatic() {
           `<title>${escapeHtml(meta.title)} | Rakibul Islam Emon</title>`,
         )
         .replace(
+          /<meta\s+name="title"\s+content=".*?"\s*\/?>/i,
+          `<meta name="title" content="${escapeHtml(meta.title)} | Rakibul Islam Emon" />`,
+        )
+        .replace(
           /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
           `<meta name="description" content="${escapeHtml(meta.summary)}" />`,
         )
-
-      // Add OpenGraph meta tags
-      if (!postHtml.includes('property="og:title"')) {
-        postHtml = postHtml.replace(
-          "</head>",
-          `  <meta property="og:title" content="${escapeHtml(meta.title)}" />\n  <meta property="og:description" content="${escapeHtml(meta.summary)}" />\n${postRedirectScript}\n</head>`,
+        .replace(
+          /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+          `<meta property="og:description" content="${escapeHtml(meta.summary)}" />`,
         )
-      } else {
-        postHtml = postHtml
-          .replace(
-            /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
-            `<meta property="og:title" content="${escapeHtml(meta.title)}" />`,
-          )
-          .replace(
-            /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
-            `<meta property="og:description" content="${escapeHtml(meta.summary)}" />`,
-          )
-          .replace("</head>", postRedirectScript + "</head>")
-      }
+        .replace(
+          /<meta\s+property="twitter:description"\s+content=".*?"\s*\/?>/i,
+          `<meta property="twitter:description" content="${escapeHtml(meta.summary)}" />`,
+        )
+        .replace(
+          /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+          `<meta property="og:title" content="${escapeHtml(meta.title)}" />`,
+        )
+        .replace(
+          /<meta\s+property="twitter:title"\s+content=".*?"\s*\/?>/i,
+          `<meta property="twitter:title" content="${escapeHtml(meta.title)}" />`,
+        )
+        .replace(
+          /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
+          `<link rel="canonical" href="${postUrl}" />`,
+        )
+        .replace(
+          /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i,
+          `<meta property="og:url" content="${postUrl}" />`,
+        )
+        .replace(
+          /<meta\s+property="twitter:url"\s+content=".*?"\s*\/?>/i,
+          `<meta property="twitter:url" content="${postUrl}" />`,
+        )
+        .replace("</head>", postRedirectScript + "</head>")
 
       fs.writeFileSync(path.join(postDir, "index.html"), postHtml)
       console.log(
@@ -157,6 +196,21 @@ async function generateStatic() {
         console.log(`✓ Generated alias static route: /blog/${altSlug}`)
       }
     }
+  }
+
+  // 5. Verify web crawler files (robots.txt and sitemap.xml)
+  const robotsSrc = path.resolve("public/robots.txt")
+  const robotsDst = path.join(DIST_DIR, "robots.txt")
+  if (fs.existsSync(robotsSrc) && (!fs.existsSync(robotsDst) || !fs.readFileSync(robotsDst, "utf8").includes("Allow: /"))) {
+    fs.copyFileSync(robotsSrc, robotsDst)
+    console.log("✓ Synced dist/robots.txt from public/robots.txt")
+  }
+
+  const sitemapSrc = path.resolve("public/sitemap.xml")
+  const sitemapDst = path.join(DIST_DIR, "sitemap.xml")
+  if (fs.existsSync(sitemapSrc) && !fs.existsSync(sitemapDst)) {
+    fs.copyFileSync(sitemapSrc, sitemapDst)
+    console.log("✓ Synced dist/sitemap.xml from public/sitemap.xml")
   }
 
   console.log("🎉 Static routes generation complete!")
